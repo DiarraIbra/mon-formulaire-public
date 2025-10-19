@@ -34,7 +34,7 @@
                 </div>
                 <div>
                     <label for="message" class="block text-sm font-medium text-gray-700">Votre message</label>
-                    <textarea id="message" name="message" rows="4" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"></textarea>
+                    <textarea id="message" name="message" rows="4" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" placeholder="Si votre message est urgent, écrivez le mot 'urgent' ici..."></textarea>
                 </div>
             </div>
             <div class="mt-8">
@@ -53,11 +53,10 @@
         const N8N_WEBHOOK_URL = 'https://ibrahimadiarra.app.n8n.cloud/webhook-test/ca9599ca-865c-4ee2-8de2-9a60c2b05267';
 
         form.addEventListener('submit', async function(event) {
-            event.preventDefault(); 
+            event.preventDefault();
 
             submitButton.disabled = true;
             submitButton.textContent = 'Envoi en cours...';
-            statusMessage.style.display = 'none';
 
             const formData = new FormData(form);
             const data = {
@@ -78,17 +77,13 @@
                     throw new Error(`Erreur du serveur: ${response.statusText}`);
                 }
                 
-                statusMessage.textContent = 'Merci ! Vos informations ont été envoyées avec succès.';
-                statusMessage.className = 'mt-6 text-center text-sm font-medium rounded-lg p-3 bg-green-100 text-green-800';
-                statusMessage.style.display = 'block';
-                form.reset(); 
+                window.location.href = `confirmation.html?prenom=${encodeURIComponent(data.prenom)}`;
 
             } catch (error) {
                 console.error('Erreur lors de l\'envoi:', error);
                 statusMessage.textContent = 'Une erreur est survenue. Veuillez réessayer plus tard.';
                 statusMessage.className = 'mt-6 text-center text-sm font-medium rounded-lg p-3 bg-red-100 text-red-800';
                 statusMessage.style.display = 'block';
-            } finally {
                 submitButton.disabled = false;
                 submitButton.textContent = 'Envoyer les informations';
             }
@@ -96,3 +91,4 @@
     </script>
 </body>
 </html>
+
